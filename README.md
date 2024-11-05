@@ -9,4 +9,12 @@ I am working on this project in tandem with my two-year Church service mission. 
 * Next.js with TypeScript simultaneously function as the frontend and backend
 * PostgreSQL database
 
+## Run command
+
+`npm run dev` (in dev)
+
+## Attributions
+
+https://www.flaticon.com/free-icon/salt-lake-temple_3542574 - FlatIcon: Free icon for SLC Temple (v1 favicon)
+
 Copyright (C) 2024 Darren R. Skidmore. All rights reserved

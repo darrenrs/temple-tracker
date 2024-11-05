@@ -1,13 +1,8 @@
-import Image from "next/image";
-import NavBar from "@/app/components/navbar";
-
 export default function Home() {
   return (
-    <>
-      <NavBar></NavBar>
-      <div className="p-6">
-        <p>Welcome to the Temple Tracker (Alpha Version)</p>
-      </div>
-    </>
+    <div className="p-6">
+      <h1 className="text-4xl">Welcome to Temple Tracker.</h1>
+      <p className="text-xl">Log in to start tracking your visits!</p>
+    </div>
   );
 }
