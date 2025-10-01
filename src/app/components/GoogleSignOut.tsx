@@ -1,14 +1,13 @@
 import { signOut } from "@/auth"
- 
+
 export default function GoogleLogoutButton() {
   return (
-    <form
-      action={async () => {
+    <button
+      onClick={async () => {
         "use server"
         await signOut()
       }}
-    >
-      <button type="submit">Sign Out</button>
-    </form>
+    >Sign Out
+    </button>
   )
 }

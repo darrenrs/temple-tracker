@@ -1,5 +1,5 @@
 import { signIn } from "@/auth"
- 
+
 export default function GoogleLoginButton() {
   return (
     <form
@@ -8,7 +8,7 @@ export default function GoogleLoginButton() {
         await signIn("google")
       }}
     >
-      <button type="submit">Login with Google</button>
+      <button type="submit">Sign in with Google</button>
     </form>
   )
 }
