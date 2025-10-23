@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import { PrismaClient } from '@prisma/client';
 
 const toDatetimeLocal = (date: Date) => {
-  const pad = (n: int) => String(n).padStart(2, '0');
+  const pad = (n: Number) => String(n).padStart(2, '0');
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
 };
 
@@ -25,7 +25,7 @@ async function getOrdinances() {
   return ordinances;
 }
 
-export async function createVisit(data: FormData) {
+async function createVisit(data: FormData) {
   "use server";
 
   const prisma = new PrismaClient();

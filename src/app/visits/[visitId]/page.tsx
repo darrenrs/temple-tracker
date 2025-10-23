@@ -19,7 +19,7 @@ async function getVisitById(userId: string, visitId: string) {
   return visit;
 }
 
-export async function deleteVisit(data: FormData) {
+async function deleteVisit(data: FormData) {
   "use server";
 
   const prisma = new PrismaClient();
