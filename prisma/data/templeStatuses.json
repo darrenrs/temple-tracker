@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Dedicated",
+    "description": "The temple is dedicated and operating normally."
+  },
+  {
+    "name": "Closed for Renovation",
+    "description": "The temple is closed for renovations for a significant period of time. It will need to be rededicated."
+  },
+  {
+    "name": "Under Construction",
+    "description": "The temple is currently under construction."
+  },
+  {
+    "name": "Announced",
+    "description": "The temple has been announced but groundbreaking has not yet occurred."
+  },
+  {
+    "name": "Closed",
+    "description": "The temple has been indefinitely closed."
+  }
+]

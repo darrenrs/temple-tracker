@@ -5,19 +5,33 @@ import { prisma } from "@/prisma"
  
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  session: {strategy: "jwt"},
-  providers: [Google],
+  session: { strategy: "jwt" },
+  providers: [
+    Google({
+      profile(profile) {
+        const picture =
+          typeof profile.picture === 'string'
+            ? profile.picture.replace(/=s\d+-c/, '=s256-c')
+            : null
+        return {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: picture,
+        }
+      },
+    }),
+  ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) { // User is available during sign-in
+      if (user) {
         token.id = user.id
       }
       return token
     },
     async session({ session, token }) {
-      // if just token.id is used, TypeScript throws an error
       session.user.id = (token.id ?? token.sub) as string
       return session
     },
-  }
+  },
 })

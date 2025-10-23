@@ -1,44 +1,22 @@
 import { PrismaClient } from '@prisma/client';
+import TempleList from './TempleList'
+import { templeWithTempleStatusArgs, type TempleWithTempleStatus } from '@/app/types/TempleWithTempleStatus';
 
 async function getTemples() {
   const prisma = new PrismaClient();
-  const temples = await prisma.temple.findMany({
-    include: {
-      templeStatus: true
-    }
-  });
+  const temples: TempleWithTempleStatus[] = await prisma.temple.findMany(templeWithTempleStatusArgs);
 
   return temples;
 }
 
-export default async function TempleMasterList() {
+export default async function TempleListPage() {
   const temples = await getTemples();
 
   return (
-    <div className="p-6">
-      <h1>Temple List</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Status</th>
-            <th>Date Dedicated</th>
-          </tr>
-        </thead>
-        <tbody>
-          {temples.map((temple) => (
-            <tr key={temple.id}>
-              <td>{temple.slug}</td>
-              <td>{temple.name}</td>
-              <td>{temple.city}, {temple.state}, {temple.country}</td>
-              <td>{temple.templeStatus?.name ?? "Unknown"}</td>
-              <td>{temple.dateDedicated?.toDateString()}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <h1 className="text-2xl pb-2">Temple List</h1>
+      <p className="text-sm italic pb-4">Click a temple for more info!</p>
+      <TempleList data={temples} />
+    </>
   );
 }

@@ -6,7 +6,7 @@ CREATE TABLE "public"."User" (
     "emailVerified" TIMESTAMP(3),
     "image" TEXT,
     "isAdmin" BOOLEAN NOT NULL DEFAULT false,
-    "hasAccess" BOOLEAN NOT NULL DEFAULT true,
+    "isAccountActivated" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -54,7 +54,6 @@ CREATE TABLE "public"."Temple" (
 -- CreateTable
 CREATE TABLE "public"."TempleStatus" (
     "id" SERIAL NOT NULL,
-    "slug" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT,
 
@@ -64,7 +63,6 @@ CREATE TABLE "public"."TempleStatus" (
 -- CreateTable
 CREATE TABLE "public"."Ordinance" (
     "id" SERIAL NOT NULL,
-    "slug" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT,
 
@@ -76,8 +74,7 @@ CREATE TABLE "public"."Visit" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "templeId" INTEGER NOT NULL,
-    "sessionDate" DATE NOT NULL,
-    "sessionTime" TIME,
+    "sessionDate" TIMESTAMP NOT NULL,
     "userNote" VARCHAR(10000) NOT NULL,
     "userFiles" BYTEA[],
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -90,7 +87,7 @@ CREATE TABLE "public"."Visit" (
 CREATE TABLE "public"."VisitOrdinance" (
     "visitId" TEXT NOT NULL,
     "ordinanceId" INTEGER NOT NULL,
-    "count" INTEGER NOT NULL DEFAULT 1,
+    "count" INTEGER,
 
     CONSTRAINT "VisitOrdinance_pkey" PRIMARY KEY ("visitId","ordinanceId")
 );
@@ -105,13 +102,7 @@ CREATE UNIQUE INDEX "Temple_slug_key" ON "public"."Temple"("slug");
 CREATE UNIQUE INDEX "Temple_name_key" ON "public"."Temple"("name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "TempleStatus_slug_key" ON "public"."TempleStatus"("slug");
-
--- CreateIndex
 CREATE UNIQUE INDEX "TempleStatus_name_key" ON "public"."TempleStatus"("name");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Ordinance_slug_key" ON "public"."Ordinance"("slug");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Ordinance_name_key" ON "public"."Ordinance"("name");
@@ -123,7 +114,7 @@ CREATE INDEX "Visit_userId_idx" ON "public"."Visit"("userId");
 CREATE INDEX "Visit_templeId_sessionDate_idx" ON "public"."Visit"("templeId", "sessionDate");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Visit_userId_templeId_sessionDate_sessionTime_key" ON "public"."Visit"("userId", "templeId", "sessionDate", "sessionTime");
+CREATE UNIQUE INDEX "Visit_userId_templeId_sessionDate_key" ON "public"."Visit"("userId", "templeId", "sessionDate");
 
 -- CreateIndex
 CREATE INDEX "VisitOrdinance_ordinanceId_idx" ON "public"."VisitOrdinance"("ordinanceId");

@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Baptism",
+    "description": "Done by immersion, it is the cleansing of one's sins and joining Christ's church."
+  },
+  {
+    "name": "Confirmation",
+    "description": "Receiving the gift of the Holy Ghost by the laying on of hands and confirmation of Church membership."
+  },
+  {
+    "name": "Initiatory",
+    "description": "A spiritual washing and anointing in preparation to make further covenants."
+  },
+  {
+    "name": "Endowment",
+    "description": "A sacred ceremony providing instruction, covenants, and spiritual power needed to enter the presence of God."
+  },
+  {
+    "name": "Sealing",
+    "description": "The binding of families for eternity; can be parent-to-child or spouse-to-spouse."
+  },
+  {
+    "name": "Ordinance Worker",
+    "description": "Those who have been set apart to perform ordinances in a House of the Lord."
+  },
+  {
+    "name": "Other",
+    "description": "Any other type of visit not already specified."
+  }
+]

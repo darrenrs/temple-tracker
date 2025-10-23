@@ -1,56 +1,33 @@
 import { auth } from "@/auth";
 import { PrismaClient } from '@prisma/client';
+import VisitList from './VisitList'
+import { visitWithTempleArgs, type VisitWithTemple } from '@/app/types/VisitWithTemple';
 
 async function getVisits(userId: string) {
   const prisma = new PrismaClient();
-  const temples = await prisma.visit.findMany({
-    where: { userId },
-    include: {
-      temple: true,
-      ordinances: {
-        include: { ordinance: true },
-      },
-    }
+  const visits: VisitWithTemple[] = await prisma.visit.findMany({
+    ...visitWithTempleArgs,
+    where: { userId }
   });
 
-  return temples;
+  return visits;
 }
 
-export default async function VisitList() {
-  const session = await auth(); // or getServerSession if using next-auth directly
+export default async function VisitListPage() {
+  const session = await auth();
+  const user = session?.user;
 
-  console.log(session)
-  if (!session?.user?.id) {
-    return <div className="p-6">Please log in to see your visits.</div>;
+  if (!user?.id) {
+    return 'Please log in.';
   }
 
-  const visits = await getVisits(session.user.id);
+  const visits = await getVisits(user!.id);
 
   return (
-    <div className="p-6">
-      <h1>Visit List</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Temple</th>
-            <th>Session Date</th>
-            <th>Notes</th>
-            <th>Ordinances</th>
-          </tr>
-        </thead>
-        <tbody>
-          {visits.map((visit) => (
-            <tr key={visit.id}>
-              <td>{visit.id}</td>
-              <td>{visit.temple.name}</td>
-              <td>{visit.sessionDate.toDateString()}</td>
-              <td>{visit.userNote}</td>
-              <td>{visit.ordinances.map((ordinances) => ordinances.ordinance.name).join(", ")}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <h1 className="text-2xl pb-2">Your Visits</h1>
+      <p className="text-sm italic pb-4">Click a visit for more info!</p>
+      <VisitList data={visits} />
+    </>
   );
 }
